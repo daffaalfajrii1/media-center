@@ -42,7 +42,7 @@
     <div class="col-md-6">
         <label class="fw-semibold">Gambar Utama</label>
         <input type="file" name="thumbnail" class="form-control" accept="image/jpeg,image/png,image/gif,image/webp">
-        <div class="form-text">JPG, PNG, GIF, atau WebP. Maks. 2 MB.</div>
+        <div class="form-text">JPG, PNG, GIF, atau WebP. Maks. 10 MB.</div>
         @if ($item?->thumbnail)
             <div class="mt-2">
                 <img src="{{ $item->thumbnailUrl() }}" alt="Thumbnail" class="rounded border" style="max-height:120px">
@@ -72,6 +72,16 @@
         @endif
     </div>
     <div class="col-12">
+        <label class="fw-semibold">Foto untuk Konten</label>
+        <input type="file" id="berita-content-photos" class="form-control" accept="image/jpeg,image/png,image/gif,image/webp" multiple>
+        <div class="form-text">
+            Bisa pilih banyak foto sekaligus di HP atau laptop. Maks. 10 MB per file.
+            Foto akan langsung dimasukkan ke editor konten di bawah.
+        </div>
+        <div id="berita-content-photos-status" class="fs-12 mt-2 text-muted" aria-live="polite"></div>
+        <div id="berita-content-photos-preview" class="d-flex flex-wrap gap-2 mt-2"></div>
+    </div>
+    <div class="col-12">
         <label class="fw-semibold">Konten</label>
         @include('admin.partials.richtext-editor', [
             'uploadUrl' => route('admin.berita.editor-upload'),
@@ -79,8 +89,10 @@
             'textareaId' => 'berita-content',
             'statusId' => 'berita-editor-status',
             'content' => old('content', $item?->content),
+            'maxImageKb' => 10240,
+            'allowMultipleImages' => true,
         ])
-        <div class="form-text">Gunakan editor untuk format teks, sisipkan gambar, tabel, dan daftar.</div>
+        <div class="form-text">Gunakan editor untuk format teks, sisipkan gambar, tabel, dan daftar. Tombol gambar juga mendukung pilih banyak foto.</div>
     </div>
 </div>
 
@@ -111,6 +123,120 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const form = document.getElementById('berita-form');
     const statusSelect = document.querySelector('#berita-form [name="status"]');
+    const photosInput = document.getElementById('berita-content-photos');
+    const photosStatus = document.getElementById('berita-content-photos-status');
+    const photosPreview = document.getElementById('berita-content-photos-preview');
+    const uploadUrl = @json(route('admin.berita.editor-upload'));
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+    const maxImageBytes = 10 * 1024 * 1024;
+
+    function setPhotosStatus(text, isError) {
+        if (!photosStatus) return;
+        photosStatus.textContent = text || '';
+        photosStatus.classList.toggle('text-danger', !!isError);
+        photosStatus.classList.toggle('text-muted', !isError);
+    }
+
+    async function uploadContentPhoto(file) {
+        const formData = new FormData();
+        formData.append('file', file, file.name);
+        formData.append('_token', csrfToken);
+
+        const response = await fetch(uploadUrl, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: formData,
+            credentials: 'same-origin',
+        });
+
+        if (!response.ok) {
+            let message = 'Gagal mengunggah ' + file.name;
+            try {
+                const data = await response.json();
+                message = data.message || data.errors?.file?.[0] || message;
+            } catch (e) { /* ignore */ }
+            throw new Error(message);
+        }
+
+        const data = await response.json();
+        const url = data.location || data.url;
+        if (!url) throw new Error('Respons server tidak berisi URL gambar.');
+        return url;
+    }
+
+    function insertImageIntoEditor(url, alt) {
+        if (typeof tinymce === 'undefined') return false;
+        const editor = tinymce.get('berita-content');
+        if (!editor) return false;
+        editor.insertContent(
+            '<p><img src="' + url + '" alt="' + (alt || '') + '" class="img-full"></p>'
+        );
+        return true;
+    }
+
+    function addPreviewThumb(url, name) {
+        if (!photosPreview) return;
+        const wrap = document.createElement('div');
+        wrap.className = 'border rounded overflow-hidden bg-light';
+        wrap.style.width = '72px';
+        wrap.style.height = '72px';
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = name || 'Foto';
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
+        wrap.appendChild(img);
+        photosPreview.appendChild(wrap);
+    }
+
+    if (photosInput) {
+        photosInput.addEventListener('change', async function () {
+            const files = Array.from(photosInput.files || []);
+            if (!files.length) return;
+
+            const invalid = files.find(function (file) {
+                return !file.type.startsWith('image/') || file.size > maxImageBytes;
+            });
+            if (invalid) {
+                setPhotosStatus(
+                    invalid.size > maxImageBytes
+                        ? 'Setiap foto maksimal 10 MB: ' + invalid.name
+                        : 'Hanya file gambar yang diperbolehkan.',
+                    true
+                );
+                photosInput.value = '';
+                return;
+            }
+
+            setPhotosStatus('Mengunggah ' + files.length + ' foto...', false);
+            let success = 0;
+
+            for (const file of files) {
+                try {
+                    const url = await uploadContentPhoto(file);
+                    if (!insertImageIntoEditor(url, file.name)) {
+                        throw new Error('Editor belum siap. Tunggu sebentar lalu coba lagi.');
+                    }
+                    addPreviewThumb(url, file.name);
+                    success += 1;
+                    setPhotosStatus('Terunggah ' + success + ' dari ' + files.length + ' foto...', false);
+                } catch (err) {
+                    setPhotosStatus(err?.message || 'Gagal mengunggah foto.', true);
+                    photosInput.value = '';
+                    return;
+                }
+            }
+
+            setPhotosStatus(success + ' foto berhasil dimasukkan ke konten.', false);
+            photosInput.value = '';
+        });
+    }
+
     if (!form || !statusSelect) return;
 
     let allowSubmit = false;

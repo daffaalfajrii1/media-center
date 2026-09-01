@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultSimpleView('pagination::simple-bootstrap-5');
 
         View::composer('public.*', PublicMenuComposer::class);
-        View::composer(['public.*', 'admin.layouts.*', 'admin.layouts.partials.*', 'layouts.auth', 'auth.*'], WebsiteSettingComposer::class);
+        View::composer(['public.*', 'admin.layouts.*', 'admin.layouts.partials.*', 'layouts.auth', 'auth.*', 'errors.*'], WebsiteSettingComposer::class);
         if (config('app.env') === 'production') {
             URL::forceScheme('https');
 

@@ -4,6 +4,8 @@
     $textareaId = $textareaId ?? 'content';
     $statusId = $statusId ?? 'editor-status';
     $content = $content ?? '';
+    $maxImageKb = (int) ($maxImageKb ?? 10240);
+    $allowMultipleImages = (bool) ($allowMultipleImages ?? true);
     $tinymceBase = 'https://cdn.jsdelivr.net/npm/tinymce@7.6.0';
 @endphp
 
@@ -38,6 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const statusEl = document.getElementById(@json($statusId));
     const form = document.getElementById(@json($formId));
     const textareaId = @json($textareaId);
+    const maxImageBytes = @json($maxImageKb) * 1024;
+    const allowMultipleImages = @json($allowMultipleImages);
 
     function setStatus(text, state) {
         if (!statusEl) return;
@@ -144,17 +148,47 @@ document.addEventListener('DOMContentLoaded', function () {
             const input = document.createElement('input');
             input.type = 'file';
             input.accept = 'image/jpeg,image/png,image/gif,image/webp';
+            if (allowMultipleImages) {
+                input.multiple = true;
+            }
             input.onchange = async function () {
-                const file = input.files?.[0];
-                if (!file) return;
+                const files = Array.from(input.files || []);
+                if (!files.length) return;
+
+                const oversized = files.find(function (file) { return file.size > maxImageBytes; });
+                if (oversized) {
+                    alert('Setiap gambar maksimal 10 MB: ' + oversized.name);
+                    return;
+                }
+
                 try {
-                    const url = await uploadImage({
-                        blob: function () { return file; },
-                        filename: function () { return file.name; },
-                    });
-                    callback(url, { alt: file.name });
+                    setStatus('Mengunggah ' + files.length + ' gambar...', 'is-saving');
+                    const urls = [];
+                    for (const file of files) {
+                        const url = await uploadImage({
+                            blob: function () { return file; },
+                            filename: function () { return file.name; },
+                        });
+                        urls.push({ url: url, name: file.name });
+                    }
+
+                    callback(urls[0].url, { alt: urls[0].name });
+
+                    if (urls.length > 1 && typeof tinymce !== 'undefined') {
+                        const editor = tinymce.get(textareaId);
+                        if (editor) {
+                            for (let i = 1; i < urls.length; i++) {
+                                editor.insertContent(
+                                    '<p><img src="' + urls[i].url + '" alt="' + (urls[i].name || '') + '" class="img-full"></p>'
+                                );
+                            }
+                        }
+                    }
+                    setStatus('', null);
                 } catch (err) {
-                    alert(err?.message || 'Gagal mengunggah gambar.');
+                    const msg = err?.message || 'Gagal mengunggah gambar.';
+                    setStatus(msg, 'is-error');
+                    alert(msg);
                 }
             };
             input.click();

@@ -34,6 +34,20 @@ class BeritaTest extends TestCase
         ]);
     }
 
+    public function test_admin_create_berita_supports_multi_photo_upload(): void
+    {
+        $user = $this->adminUser();
+
+        $response = $this->actingAs($user)->get(route('admin.berita.create'));
+
+        $response->assertOk();
+        $response->assertSee('Foto untuk Konten', false);
+        $response->assertSee('id="berita-content-photos"', false);
+        $response->assertSee('multiple', false);
+        $response->assertSee('Maks. 10 MB', false);
+        $response->assertSee('input.multiple = true', false);
+    }
+
     public function test_admin_can_view_berita_index(): void
     {
         $user = $this->adminUser();

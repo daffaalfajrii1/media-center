@@ -138,8 +138,11 @@ class BeritaController extends Controller
             'excerpt' => ['nullable', 'string', 'max:500'],
             'content' => ['nullable', 'string'],
             'status' => ['required', 'in:'.Berita::STATUS_DRAFT.','.Berita::STATUS_PUBLISHED],
-            'thumbnail' => ['nullable', 'image', 'max:2048'],
-        ], [], [
+            'thumbnail' => ['nullable', 'image', 'max:10240'],
+        ], [
+            'thumbnail.max' => 'Gambar utama maksimal 10 MB.',
+            'thumbnail.image' => 'Gambar utama harus berupa file gambar (JPG, PNG, GIF, atau WebP).',
+        ], [
             'berita_category_id' => 'kategori',
             'title' => 'judul',
             'excerpt' => 'ringkasan',

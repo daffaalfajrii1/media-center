@@ -60,8 +60,5 @@
 @section('footer_links')
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
         <a href="{{ route('home') }}" class="kecamatan-auth-card__back">← Kembali ke website</a>
-        @if (Route::has('register'))
-            <span class="kecamatan-auth-card__meta">Belum punya akun? <a href="{{ route('register') }}" class="kecamatan-auth-form__link fw-semibold">Daftar</a></span>
-        @endif
     </div>
 @endsection

@@ -20,8 +20,11 @@ trait HandlesEditorUpload
 
         Validator::make(
             ['file' => $file],
-            ['file' => ['required', 'image', 'max:5120']],
-            ['file.image' => 'File harus berupa gambar (JPG, PNG, GIF, atau WebP).'],
+            ['file' => ['required', 'image', 'max:10240']],
+            [
+                'file.image' => 'File harus berupa gambar (JPG, PNG, GIF, atau WebP).',
+                'file.max' => 'Ukuran gambar maksimal 10 MB.',
+            ],
         )->validate();
 
         $folder = $request->input('folder', 'pages/editor');
