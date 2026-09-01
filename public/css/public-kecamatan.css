@@ -1,0 +1,491 @@
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #f4f7fb;
+    color: #1e293b;
+}
+
+.kecamatan-public-header {
+    background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #3b82f6 100%);
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.25);
+}
+
+.kecamatan-public-navbar {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.kecamatan-public-brand {
+    color: #fff !important;
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+.kecamatan-public-brand__logo {
+    height: 42px;
+    width: auto;
+    max-width: 56px;
+    object-fit: contain;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 4px;
+}
+
+.kecamatan-public-brand__name {
+    display: block;
+    line-height: 1.2;
+}
+
+.kecamatan-public-brand__tagline {
+    display: block;
+    font-weight: 500;
+    opacity: 0.88;
+    font-size: 0.72rem;
+}
+
+.kecamatan-public-nav .nav-link {
+    color: rgba(255, 255, 255, 0.92) !important;
+    font-weight: 500;
+    padding: 0.5rem 0.9rem !important;
+}
+
+.kecamatan-public-nav .nav-link:hover,
+.kecamatan-public-nav .nav-link.active,
+.kecamatan-public-nav .show > .nav-link {
+    color: #fff !important;
+}
+
+.kecamatan-profil-dropdown {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    min-width: 240px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
+}
+
+.kecamatan-profil-dropdown .dropdown-header {
+    background: #475569;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.7rem 1rem;
+    margin-bottom: 0;
+}
+
+.kecamatan-profil-dropdown .dropdown-item {
+    padding: 0.65rem 1rem;
+    color: #334155;
+    font-weight: 500;
+}
+
+.kecamatan-profil-dropdown .dropdown-item:hover,
+.kecamatan-profil-dropdown .dropdown-item.active {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+.kecamatan-hero {
+    padding: 4rem 0 5rem;
+    background: linear-gradient(180deg, #dbeafe 0%, #f4f7fb 100%);
+}
+
+.kecamatan-hero__badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+}
+
+.kecamatan-hero__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1rem;
+}
+
+.kecamatan-hero__lead {
+    color: #475569;
+    font-size: 1.05rem;
+    max-width: 640px;
+    margin-bottom: 1.5rem;
+}
+
+.kecamatan-hero__card {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.kecamatan-hero__links li + li {
+    margin-top: 0.5rem;
+}
+
+.kecamatan-hero__links a {
+    color: #1d4ed8;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.kecamatan-hero__links a:hover {
+    text-decoration: underline;
+}
+
+.kecamatan-page-hero {
+    padding: 2.5rem 0 1.5rem;
+    background: linear-gradient(180deg, #dbeafe 0%, #f4f7fb 100%);
+}
+
+.kecamatan-page-hero__title {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+}
+
+.kecamatan-page-hero__excerpt {
+    color: #64748b;
+    margin-bottom: 0;
+}
+
+.kecamatan-breadcrumb .breadcrumb-item a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.kecamatan-page-content {
+    padding: 0 0 4rem;
+}
+
+.kecamatan-page-body {
+    line-height: 1.8;
+    color: #334155;
+}
+
+.kecamatan-page-body p:last-child {
+    margin-bottom: 0;
+}
+
+.kecamatan-page-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+}
+
+.kecamatan-page-body table {
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.kecamatan-page-body table td,
+.kecamatan-page-body table th {
+    border: 1px solid #e2e8f0;
+    padding: 0.5rem 0.75rem;
+}
+
+.kecamatan-home-carousel {
+    background: #0f172a;
+}
+
+.kecamatan-home-carousel .carousel-inner {
+    max-height: min(52vw, 480px);
+}
+
+.kecamatan-home-carousel__img {
+    width: 100%;
+    height: min(52vw, 480px);
+    object-fit: cover;
+    object-position: center;
+}
+
+.kecamatan-home-carousel__link {
+    display: block;
+}
+
+.kecamatan-home-carousel__caption {
+    background: linear-gradient(transparent, rgba(15, 23, 42, 0.75));
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 2rem 1.25rem 1.25rem;
+    text-align: left;
+}
+
+.kecamatan-home-carousel__caption h5 {
+    font-weight: 700;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+.kecamatan-home-carousel .carousel-indicators [data-bs-target] {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+@media (max-width: 767.98px) {
+    .kecamatan-home-carousel .carousel-inner,
+    .kecamatan-home-carousel__img {
+        height: 220px;
+        max-height: 220px;
+    }
+
+    .kecamatan-home-carousel__caption {
+        padding: 1rem 0.85rem 0.75rem;
+    }
+
+    .kecamatan-home-carousel__caption h5 {
+        font-size: 1rem;
+    }
+
+    .kecamatan-home-carousel__caption p {
+        font-size: 0.8rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
+.kecamatan-marquee {
+    display: flex;
+    align-items: stretch;
+    background: #fbbf24;
+    color: #78350f;
+    font-size: 0.875rem;
+    overflow: hidden;
+}
+
+.kecamatan-marquee__label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: #f59e0b;
+    color: #fff;
+    font-weight: 700;
+    padding: 0.55rem 0.9rem;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+}
+
+.kecamatan-marquee__track-wrap {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.kecamatan-marquee__track {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    white-space: nowrap;
+    animation: kecamatan-marquee-scroll 35s linear infinite;
+    padding: 0.55rem 0;
+}
+
+.kecamatan-marquee__item {
+    font-weight: 600;
+}
+
+.kecamatan-marquee__sep {
+    opacity: 0.5;
+}
+
+@keyframes kecamatan-marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.kecamatan-map-section {
+    padding: 0 0 4rem;
+}
+
+.kecamatan-map-card {
+    background: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.kecamatan-map-card__info {
+    padding: 1.75rem;
+    background: #f8fafc;
+}
+
+.kecamatan-map-card__embed {
+    min-height: 320px;
+    height: 100%;
+}
+
+.kecamatan-map-card__embed iframe {
+    display: block;
+    min-height: 320px;
+}
+
+.kecamatan-public-footer {
+    background: #0f172a;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 2rem;
+}
+
+.kecamatan-public-footer__bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+}
+
+.kecamatan-footer-brand__logo {
+    height: 48px;
+    width: auto;
+    max-width: 64px;
+    object-fit: contain;
+}
+
+.kecamatan-footer-title {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.kecamatan-footer-contact li {
+    margin-bottom: 0.55rem;
+}
+
+.kecamatan-footer-contact a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+}
+
+.kecamatan-footer-contact a:hover {
+    text-decoration: underline;
+}
+
+.kecamatan-footer-social {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.kecamatan-footer-social a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+
+.kecamatan-footer-social a:hover {
+    background: #2563eb;
+}
+
+.kecamatan-footer-text {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.9rem;
+}
+
+.fs-14 {
+    font-size: 0.875rem;
+}
+
+.kecamatan-pegawai-public {
+    background: #f4f7fb;
+}
+
+.kecamatan-pegawai-group__header {
+    border-left: 4px solid #2563eb;
+    padding-left: 1rem;
+}
+
+.kecamatan-pegawai-card {
+    background: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.kecamatan-pegawai-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+}
+
+.kecamatan-pegawai-card__photo-wrap {
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(180deg, #dbeafe 0%, #eff6ff 100%);
+}
+
+.kecamatan-pegawai-card__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.kecamatan-pegawai-card__fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #2563eb;
+    background: linear-gradient(180deg, #dbeafe 0%, #eff6ff 100%);
+}
+
+.kecamatan-pegawai-card__body {
+    padding: 1.1rem 1.15rem 1.25rem;
+    text-align: center;
+}
+
+.kecamatan-pegawai-card__name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+}
+
+.kecamatan-pegawai-card__jabatan {
+    color: #2563eb;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.kecamatan-pegawai-card__meta {
+    color: #64748b;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.kecamatan-pegawai-card__bio {
+    color: #475569;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.kecamatan-pegawai-card__contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+    color: #64748b;
+}

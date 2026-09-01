@@ -1,0 +1,897 @@
+/* Penyesuaian website Kecamatan Sindang Kelingi pada template Optilux */
+
+/* Beranda: header & area atas/bawah putih (bukan gelap) */
+body.page-beranda {
+    background: #fff;
+}
+
+body.page-beranda header.transparent.header-light.header-float {
+    position: relative;
+    top: auto;
+    background: #fff !important;
+    border-bottom: 1px solid #eef1f4;
+}
+
+body.page-beranda header.header-float .header-inner {
+    margin-top: 0;
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+    background: #fff !important;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+body.page-beranda header.smaller {
+    position: fixed;
+    top: 0;
+    background: #fff !important;
+    border-bottom: 1px solid #eef1f4;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+body.page-beranda header.smaller.header-float .header-inner {
+    margin-top: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+body.page-beranda .kecamatan-home-carousel {
+    background: #fff;
+}
+
+#logo img {
+    max-height: 52px;
+    width: auto;
+}
+
+.logo-footer {
+    max-height: 48px;
+    width: auto;
+}
+
+.kecamatan-marquee {
+    background: var(--primary-color, #1a5f7a);
+    color: #fff;
+    overflow: hidden;
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.kecamatan-marquee__track {
+    display: flex;
+    gap: 3rem;
+    white-space: nowrap;
+    animation: kecamatan-marquee-scroll 40s linear infinite;
+}
+
+.kecamatan-marquee__item::before {
+    content: "•";
+    margin-right: 1rem;
+    opacity: 0.7;
+}
+
+@keyframes kecamatan-marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Carousel beranda */
+.kecamatan-home-carousel {
+    position: relative;
+    background: #0d2130;
+}
+
+.kecamatan-home-carousel .carousel-inner {
+    border-radius: 0;
+}
+
+.kecamatan-carousel-slide {
+    position: relative;
+    overflow: hidden;
+}
+
+.kecamatan-carousel-slide img {
+    width: 100%;
+    max-height: 480px;
+    min-height: 280px;
+    object-fit: cover;
+    display: block;
+}
+
+.kecamatan-carousel-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1.25rem 1.5rem 2.75rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.45) 70%, transparent 100%);
+    text-align: left;
+    z-index: 2;
+}
+
+.kecamatan-carousel-caption__title {
+    color: #fff !important;
+    font-size: clamp(1.1rem, 2.5vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 0.35rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.kecamatan-carousel-caption__text {
+    color: rgba(255, 255, 255, 0.92) !important;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 900px;
+}
+
+.kecamatan-carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+    z-index: 3;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.kecamatan-carousel-nav:hover {
+    background: #fff;
+}
+
+.kecamatan-carousel-nav span {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid var(--primary-color, #1a5f7a);
+    border-right: 2px solid var(--primary-color, #1a5f7a);
+}
+
+.kecamatan-carousel-nav--prev {
+    left: 1rem;
+}
+
+.kecamatan-carousel-nav--prev span {
+    transform: rotate(-135deg);
+    margin-left: 4px;
+}
+
+.kecamatan-carousel-nav--next {
+    right: 1rem;
+}
+
+.kecamatan-carousel-nav--next span {
+    transform: rotate(45deg);
+    margin-right: 4px;
+}
+
+.kecamatan-carousel-dots {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 3;
+}
+
+.kecamatan-carousel-dot {
+    width: 10px;
+    height: 10px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.45);
+    padding: 0;
+    cursor: pointer;
+}
+
+.kecamatan-carousel-dot.active {
+    background: #fff;
+    transform: scale(1.15);
+}
+
+/* Hilangkan kotak icon bootstrap bawaan di carousel */
+.kecamatan-home-carousel .carousel-control-prev,
+.kecamatan-home-carousel .carousel-control-next,
+.kecamatan-home-carousel .carousel-control-prev-icon,
+.kecamatan-home-carousel .carousel-control-next-icon,
+.kecamatan-home-carousel .carousel-indicators {
+    display: none !important;
+}
+
+/* Menu: hamburger 3 garis (tanpa kotak FontAwesome) */
+@media (max-width: 992px) {
+    #menu-btn {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 0.5rem;
+        background: transparent;
+    }
+
+    #menu-btn::before {
+        content: none !important;
+    }
+
+    #menu-btn::after {
+        content: '';
+        display: block;
+        width: 22px;
+        height: 16px;
+        background:
+            linear-gradient(var(--primary-color, #1a5f7a), var(--primary-color, #1a5f7a)) 0 0 / 100% 2px no-repeat,
+            linear-gradient(var(--primary-color, #1a5f7a), var(--primary-color, #1a5f7a)) 0 7px / 100% 2px no-repeat,
+            linear-gradient(var(--primary-color, #1a5f7a), var(--primary-color, #1a5f7a)) 0 14px / 100% 2px no-repeat;
+    }
+
+    #menu-btn.menu-open::before {
+        content: '×' !important;
+        font-family: Arial, sans-serif !important;
+        font-size: 28px !important;
+        line-height: 1;
+        color: var(--primary-color, #1a5f7a);
+        display: block !important;
+    }
+
+    #menu-btn.menu-open::after {
+        display: none;
+    }
+}
+
+/* Dropdown arrow menu */
+#mainmenu > li.has-child::after {
+    font-family: inherit !important;
+    content: '▾' !important;
+    font-size: 0.85rem !important;
+    top: 0 !important;
+    color: rgba(0, 0, 0, 0.45) !important;
+}
+
+header.header-light #mainmenu > li.has-child::after {
+    color: rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Judul section beranda — tanpa efek split yang berantakan */
+.kecamatan-section-title {
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    line-height: 1.3;
+    color: var(--heading-font-color, #1a2b3c);
+    word-break: break-word;
+}
+
+/* Hero beranda */
+.kecamatan-hero {
+    position: relative;
+    background: linear-gradient(135deg, #003d47 0%, #005461 42%, #007d91 100%);
+    color: #fff;
+    overflow: hidden;
+}
+
+.kecamatan-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 10% 80%, rgba(0, 0, 0, 0.15) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.kecamatan-hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+.kecamatan-hero__badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    margin-bottom: 1.25rem;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 2rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.kecamatan-hero__title {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+    word-break: break-word;
+}
+
+.kecamatan-hero__lead {
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.92);
+    max-width: 560px;
+    margin-bottom: 1.75rem;
+    font-weight: 400;
+}
+
+.kecamatan-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.kecamatan-hero__btn-alt {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.65rem 1.35rem;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    border-radius: 2rem;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.kecamatan-hero__btn-alt:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: #fff;
+    color: #fff;
+}
+
+.kecamatan-hero-stats {
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 1rem;
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.kecamatan-hero-stats__title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--primary-color, #005461);
+    margin-bottom: 1.25rem;
+}
+
+.kecamatan-hero-stats__item {
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    background: #f4f8f9;
+    border-radius: 0.75rem;
+}
+
+.kecamatan-hero-stats__number {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--primary-color, #005461);
+    margin-bottom: 0.35rem;
+}
+
+.kecamatan-hero-stats__label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #495057;
+}
+
+@media (max-width: 991px) {
+    .kecamatan-hero .py-5 {
+        padding-top: 2.5rem !important;
+        padding-bottom: 2.5rem !important;
+    }
+
+    .kecamatan-hero-stats {
+        margin-top: 0.5rem;
+    }
+}
+
+#subheader h1.split,
+.kecamatan-subheader__title {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    line-height: 1.3;
+    word-break: break-word;
+}
+
+/* Thumbnail transparan di subheader berita */
+.kecamatan-subheader--has-thumb {
+    overflow: hidden;
+}
+
+.kecamatan-subheader__bg-thumb {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.12;
+    filter: blur(2px);
+    pointer-events: none;
+}
+
+.kecamatan-subheader__thumb {
+    margin: 1.25rem auto 0;
+    max-width: 420px;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    opacity: 0.45;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.kecamatan-subheader__thumb img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+#subheader.kecamatan-subheader--has-thumb {
+    padding-bottom: 2.5rem;
+}
+
+/* Thumbnail berita */
+.kecamatan-post-thumb {
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background: #e9ecef;
+}
+
+.kecamatan-post-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.kecamatan-post-thumb:hover img {
+    transform: scale(1.05);
+}
+
+.kecamatan-berita-featured {
+    max-height: 360px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.kecamatan-berita-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 0.75rem;
+}
+
+.kecamatan-berita-author__avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--primary-color);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.kecamatan-berita-author__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.kecamatan-berita-author__label {
+    font-size: 0.75rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.15rem;
+}
+
+.kecamatan-berita-author__name {
+    font-weight: 700;
+    color: #212529;
+    line-height: 1.3;
+}
+
+.kecamatan-berita-author__role {
+    font-size: 0.875rem;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.kecamatan-berita-meta {
+    font-size: 0.9rem;
+}
+
+.kecamatan-berita-card__title {
+    font-size: 1.1rem;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+}
+
+.kecamatan-berita-card__title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.kecamatan-berita-card__title a:hover {
+    color: var(--primary-color);
+}
+
+/* Kartu layanan dengan icon */
+.kecamatan-layanan-card {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.kecamatan-layanan-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.kecamatan-layanan-card__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.kecamatan-layanan-card__code {
+    display: block;
+    color: var(--primary-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 0.35rem;
+}
+
+.kecamatan-layanan-card__title {
+    font-size: 1.1rem;
+    color: #212529;
+    margin-bottom: 0.5rem;
+}
+
+.kecamatan-layanan-card__desc {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.kecamatan-layanan-card__link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+/* Download pengumuman */
+.kecamatan-download-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.kecamatan-download-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+}
+
+.kecamatan-download-item__info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+.kecamatan-download-item__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 0.5rem;
+    background: var(--primary-color);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.kecamatan-download-item__title {
+    font-weight: 600;
+    color: #212529;
+    word-break: break-word;
+}
+
+.kecamatan-download-item__size {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.kecamatan-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    color: #fff !important;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.kecamatan-download-btn:hover {
+    opacity: 0.9;
+    color: #fff !important;
+}
+
+/* Pegawai — kartu menyamping */
+.kecamatan-pegawai-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.25rem;
+}
+
+.kecamatan-pegawai-card {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    text-align: left;
+    height: 100%;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.kecamatan-pegawai-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.kecamatan-pegawai-card__photo-wrap {
+    flex: 0 0 130px;
+    width: 130px;
+    min-height: 160px;
+    overflow: hidden;
+    background: #e9ecef;
+}
+
+.kecamatan-pegawai-card__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+}
+
+.kecamatan-pegawai-card__fallback {
+    width: 100%;
+    height: 100%;
+    min-height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #d4eef2 0%, #e9ecef 100%);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color, #005461);
+}
+
+.kecamatan-pegawai-card__body {
+    flex: 1;
+    padding: 1rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+
+.kecamatan-pegawai-card__jabatan {
+    color: var(--primary-color, #005461);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.35rem;
+}
+
+.kecamatan-pegawai-card__name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 0.35rem;
+    color: #212529;
+}
+
+.kecamatan-pegawai-card__meta {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.kecamatan-pegawai-card__bio {
+    font-size: 0.85rem;
+    color: #6c757d;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.kecamatan-pegawai-card__contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.8rem;
+    color: #495057;
+}
+
+@media (max-width: 575px) {
+    .kecamatan-pegawai-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kecamatan-pegawai-card__photo-wrap {
+        flex: 0 0 110px;
+        width: 110px;
+        min-height: 140px;
+    }
+}
+
+.kecamatan-badge-penting {
+    background: #dc3545;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+}
+
+.kecamatan-badge-featured {
+    background: #ffc107;
+    color: #212529;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+}
+
+.kecamatan-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+.kecamatan-content img:not([style*="width"]):not([width]):not(.img-medium):not(.img-small) {
+    width: 100%;
+    display: block;
+}
+
+.kecamatan-content img.img-full {
+    width: 100%;
+    display: block;
+}
+
+.kecamatan-content img.img-medium {
+    width: min(60%, 640px);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.kecamatan-content img.img-small {
+    width: min(35%, 360px);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.kecamatan-content img[style*="float: left"],
+.kecamatan-content img[style*="float:left"] {
+    float: left;
+    margin: 0 1.5rem 1rem 0;
+    max-width: 50%;
+}
+
+.kecamatan-content img[style*="float: right"],
+.kecamatan-content img[style*="float:right"] {
+    float: right;
+    margin: 0 0 1rem 1.5rem;
+    max-width: 50%;
+}
+
+.kecamatan-galeri-grid img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.kecamatan-status-badge {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.kecamatan-status-badge--pending { background: #fff3cd; color: #856404; }
+.kecamatan-status-badge--processing { background: #cff4fc; color: #055160; }
+.kecamatan-status-badge--completed { background: #d1e7dd; color: #0f5132; }
+.kecamatan-status-badge--rejected { background: #f8d7da; color: #842029; }
+
+.kecamatan-map-embed iframe {
+    width: 100%;
+    min-height: 400px;
+    border: 0;
+    border-radius: 0.5rem;
+}
+
+/* Form layanan */
+.kecamatan-layanan-form .form-control {
+    background: #fff;
+    border: 1px solid #ced4da;
+    color: #212529;
+}
+
+.kecamatan-layanan-form .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(26, 95, 122, 0.15);
+}
+
+.kecamatan-layanan-form .invalid-feedback {
+    color: #dc3545;
+    font-size: 0.875rem;
+}
+
+/* Footer — kolaborasi Kominfo */
+.kecamatan-footer-kominfo {
+    margin-top: 0.35rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.5;
+}
+
+.kecamatan-footer-kominfo__name {
+    color: rgba(255, 255, 255, 0.92);
+    font-weight: 600;
+}
