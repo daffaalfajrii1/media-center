@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AgendaController;
+use App\Http\Controllers\Admin\ApiTokenController;
 use App\Http\Controllers\Admin\GaleriController;
 use App\Http\Controllers\Admin\BeritaCategoryController;
 use App\Http\Controllers\Admin\BeritaController;
@@ -148,5 +149,14 @@ Route::middleware(['auth', 'verified', PermissionMiddleware::using('view dashboa
                 Route::put('/', [WebsiteSettingController::class, 'update'])->name('update');
                 Route::post('carousel', [WebsiteSettingController::class, 'storeCarousel'])->name('carousel.store');
                 Route::delete('carousel/{carousel}', [WebsiteSettingController::class, 'destroyCarousel'])->name('carousel.destroy');
+            });
+
+        Route::middleware(PermissionMiddleware::using('manage api tokens'))
+            ->prefix('api-tokens')
+            ->name('api-tokens.')
+            ->group(function () {
+                Route::get('/', [ApiTokenController::class, 'index'])->name('index');
+                Route::post('/', [ApiTokenController::class, 'store'])->name('store');
+                Route::delete('{apiToken}', [ApiTokenController::class, 'destroy'])->name('destroy');
             });
     });

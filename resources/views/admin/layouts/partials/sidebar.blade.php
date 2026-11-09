@@ -125,6 +125,15 @@
                         </a>
                     </li>
                 @endcan
+
+                @can('manage api tokens')
+                    <li class="nxl-item {{ request()->routeIs('admin.api-tokens.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.api-tokens.index') }}" class="nxl-link">
+                            <span class="nxl-micon"><i class="feather-key"></i></span>
+                            <span class="nxl-mtext">Token API</span>
+                        </a>
+                    </li>
+                @endcan
             </ul>
         </div>
     </div>

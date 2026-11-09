@@ -25,6 +25,7 @@ class RoleAndPermissionSeeder extends Seeder
             'manage pengumuman',
             'manage layanan',
             'manage pengaturan',
+            'manage api tokens',
         ];
 
         foreach ($permissions as $permission) {
@@ -54,6 +55,7 @@ class RoleAndPermissionSeeder extends Seeder
             'manage pegawai',
             'manage pengumuman',
             'manage layanan',
+            'manage api tokens',
         ]);
 
         $editor = Role::firstOrCreate([

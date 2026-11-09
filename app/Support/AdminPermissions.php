@@ -20,6 +20,7 @@ class AdminPermissions
         'manage pengumuman' => 'Kelola pengumuman',
         'manage layanan' => 'Kelola layanan publik',
         'manage pengaturan' => 'Kelola pengaturan website',
+        'manage api tokens' => 'Kelola token API (WordPress)',
     ];
 
     public const ROLE_LABELS = [
@@ -56,6 +57,7 @@ class AdminPermissions
                 'manage pegawai',
                 'manage pengumuman',
                 'manage layanan',
+                'manage api tokens',
             ],
         ],
         User::ROLE_EDITOR => [
