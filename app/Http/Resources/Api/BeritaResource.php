@@ -14,7 +14,8 @@ class BeritaResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $thumbnail = SeoUrl::absolute($this->thumbnailUrl());
+        $thumbnail = SeoUrl::publicAbsolute($this->thumbnailUrl());
+        $publicUrl = SeoUrl::publicAbsolute('/berita/'.$this->slug);
 
         return [
             'id' => $this->id,
@@ -34,8 +35,8 @@ class BeritaResource extends JsonResource
             'published_at' => $this->published_at?->toIso8601String(),
             'published_at_formatted' => $this->published_at?->timezone(config('app.timezone'))->format('d/m/Y'),
             'views_count' => $this->views_count,
-            'url' => $this->publicUrl(),
-            'read_more_url' => $this->publicUrl(),
+            'url' => $publicUrl,
+            'read_more_url' => $publicUrl,
         ];
     }
 }

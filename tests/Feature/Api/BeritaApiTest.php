@@ -87,6 +87,29 @@ class BeritaApiTest extends TestCase
         $this->assertFalse($titles->contains('Draft Rahasia'));
     }
 
+    public function test_api_media_urls_use_app_url_not_request_host(): void
+    {
+        config(['app.url' => 'https://mediacenter.rejanglebongkab.go.id']);
+
+        $user = $this->publisher();
+        $this->publishedBerita($user, 'Berita Foto Publik', 'berita-foto-publik');
+
+        Sanctum::actingAs($user);
+
+        $response = $this->getJson('http://10.90.120.9/api/v1/berita/terbaru?limit=1', [
+            'Host' => 'mediacenter.rejanglebongkab.go.id',
+        ]);
+
+        $response->assertOk();
+        $image = $response->json('data.0.featured_image');
+        $url = $response->json('data.0.url');
+
+        $this->assertNotNull($image);
+        $this->assertStringStartsWith('https://mediacenter.rejanglebongkab.go.id/', $image);
+        $this->assertStringNotContainsString('10.90.120.9', (string) $image);
+        $this->assertSame('https://mediacenter.rejanglebongkab.go.id/berita/berita-foto-publik', $url);
+    }
+
     public function test_berita_index_is_paginated(): void
     {
         $user = $this->publisher();

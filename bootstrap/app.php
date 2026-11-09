@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->appendToGroup('api', [
+            \App\Http\Middleware\ForcePublicAppUrl::class,
             \App\Http\Middleware\SecurityHeaders::class,
         ]);
 
