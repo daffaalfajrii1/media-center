@@ -107,6 +107,7 @@ class BeritaApiTest extends TestCase
         $this->assertNotNull($image);
         $this->assertStringStartsWith('https://mediacenter.rejanglebongkab.go.id/', $image);
         $this->assertStringNotContainsString('10.90.120.9', (string) $image);
+        $this->assertStringNotContainsString('//storage', (string) $image);
         $this->assertSame('https://mediacenter.rejanglebongkab.go.id/berita/berita-foto-publik', $url);
     }
 

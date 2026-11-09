@@ -6,24 +6,18 @@
  * SETUP wp-config.php (sebelum "That's all, stop editing!")
  * =====================================================================
  *
- * // Internal (WAJIB dari server WordPress 10.90.120.19)
  * define('MC_API_BASE', 'http://10.90.120.9/api/v1');
  * define('MC_API_HOST', 'mediacenter.rejanglebongkab.go.id');
  * define('MC_API_TOKEN', 'token-dari-admin-media-center');
- * define('MC_PUBLIC_URL', 'https://mediacenter.rejanglebongkab.go.id'); // foto untuk pengunjung
- *
- * Jangan pakai https://mediacenter... sebagai MC_API_BASE dari server WP
- * (IP publik sering Connection refused / hairpin NAT).
- * Foto di browser tetap harus pakai MC_PUBLIC_URL (HTTPS publik).
+ * define('MC_PUBLIC_URL', 'https://mediacenter.rejanglebongkab.go.id');
  *
  * =====================================================================
  * PASANG
  * =====================================================================
- * 1. Salin file ini ke child theme Avada, lalu di functions.php:
- *    require_once get_stylesheet_directory() . '/wordpress-berita-terbaru.php';
- *    ATAU tempel seluruh isi di bawah ke functions.php child theme.
- * 2. Di halaman Avada: [mc_berita_terbaru limit="4" title="Berita Terbaru"]
- * 3. Hapus cache Avada / plugin cache setelah ubah token.
+ * 1. Salin ke child theme Avada / tempel di functions.php child theme
+ * 2. Shortcode: [mc_berita_terbaru limit="4" title="Berita Terbaru"]
+ * 3. Setelah update: hapus cache Avada + transient WP
+ *    Shortcode sekali: [mc_berita_terbaru cache="1"] lalu kembalikan
  */
 
 if (! defined('ABSPATH')) {
@@ -53,16 +47,15 @@ add_action('wp_enqueue_scripts', function () {
 .mc-berita-card__more{margin-top:auto;font-size:13px;font-weight:600;color:#334155;text-decoration:none}
 .mc-berita-card__more:hover{color:#1d4ed8}
 .mc-berita-empty,.mc-berita-error{text-align:center;color:#64748b;padding:24px}
+.mc-berita-debug{font-size:11px;color:#94a3b8;word-break:break-all;margin-top:6px}
 ';
 
-    wp_register_style('mc-berita-terbaru', false, [], '1.1.0');
+    wp_register_style('mc-berita-terbaru', false, [], '1.2.0');
     wp_enqueue_style('mc-berita-terbaru');
     wp_add_inline_style('mc-berita-terbaru', $css);
 });
 
 /**
- * Konfigurasi API Media Center (pola sama seperti Layanko).
- *
  * @return array{base:string,host:string,token:string,public:string}
  */
 function mc_berita_api_config()
@@ -75,7 +68,6 @@ function mc_berita_api_config()
             ? (string) MC_API_HOST
             : 'mediacenter.rejanglebongkab.go.id',
         'token' => defined('MC_API_TOKEN') ? (string) MC_API_TOKEN : '',
-        // Domain publik untuk foto/link (browser pengunjung, bukan IP internal)
         'public' => defined('MC_PUBLIC_URL')
             ? rtrim((string) MC_PUBLIC_URL, '/')
             : 'https://mediacenter.rejanglebongkab.go.id',
@@ -83,8 +75,8 @@ function mc_berita_api_config()
 }
 
 /**
- * Ubah URL internal (10.90.120.9 / http) jadi URL publik HTTPS
- * agar foto tampil di jaringan publik (bukan hanya VPN PDN).
+ * Paksa semua media/link Media Center ke HTTPS publik.
+ * Menghindari IP internal & slash ganda //storage//...
  */
 function mc_berita_public_media_url($url)
 {
@@ -92,19 +84,28 @@ function mc_berita_public_media_url($url)
         return '';
     }
 
+    $url = html_entity_decode($url, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $url = preg_replace('#(?<!:)/{2,}#', '/', $url);
+
     $config = mc_berita_api_config();
-    $public = $config['public'];
+    $public = rtrim($config['public'], '/');
+    $parts = wp_parse_url($url);
 
-    $replacements = [
-        'http://10.90.120.9',
-        'https://10.90.120.9',
-        'http://mediacenter.rejanglebongkab.go.id',
-    ];
+    if (! is_array($parts) || empty($parts['path'])) {
+        return $url;
+    }
 
-    foreach ($replacements as $from) {
-        if (str_starts_with($url, $from)) {
-            return $public . substr($url, strlen($from));
-        }
+    $path = preg_replace('#/+#', '/', $parts['path']);
+    $query = ! empty($parts['query']) ? '?'.$parts['query'] : '';
+
+    // Path storage / berita selalu pakai domain publik
+    if (str_contains($path, '/storage/') || str_contains($path, '/berita/')) {
+        return $public.$path.$query;
+    }
+
+    $host = $parts['host'] ?? '';
+    if (in_array($host, ['10.90.120.9', 'mediacenter.rejanglebongkab.go.id'], true)) {
+        return $public.$path.$query;
     }
 
     return $url;
@@ -126,7 +127,8 @@ add_shortcode('mc_berita_terbaru', function ($atts) {
     }
 
     $limit = max(1, min(20, (int) $atts['limit']));
-    $cache_key = 'mc_berita_terbaru_v2_' . md5($config['base'] . '|' . $config['host'] . '|' . $limit);
+    // v3: bust cache lama yang masih menyimpan URL IP internal
+    $cache_key = 'mc_berita_terbaru_v3_' . md5($config['base'] . '|' . $config['host'] . '|' . $config['public'] . '|' . $limit);
     $items = get_transient($cache_key);
 
     if ($items === false) {
@@ -139,7 +141,6 @@ add_shortcode('mc_berita_terbaru', function ($atts) {
             'headers' => [
                 'Accept' => 'application/json',
                 'Authorization' => 'Bearer ' . $config['token'],
-                // Wajib: satu IP banyak app (Media Center + Layanko)
                 'Host' => $config['host'],
             ],
         ]);
@@ -190,9 +191,15 @@ add_shortcode('mc_berita_terbaru', function ($atts) {
                         <a class="mc-berita-card__media" href="<?php echo esc_url($link); ?>" target="_blank" rel="noopener">
                             <img src="<?php echo esc_url($image); ?>"
                                  alt="<?php echo esc_attr($item['title'] ?? ''); ?>"
-                                 loading="lazy"
+                                 width="640"
+                                 height="400"
+                                 loading="eager"
+                                 decoding="async"
                                  referrerpolicy="no-referrer">
                         </a>
+                        <?php if ($debug) : ?>
+                            <div class="mc-berita-debug"><?php echo esc_html($image); ?></div>
+                        <?php endif; ?>
                     <?php endif; ?>
 
                     <div class="mc-berita-card__body">
